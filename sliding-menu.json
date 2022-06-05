@@ -1,0 +1,29 @@
+{
+	"name": "Sliding Menu",
+	"description": "Sliding Menu test",
+	"eula": "",
+	"vendor": "",
+	"license": "",
+	"id": "com.sap.sample.SlidingMenu",
+	"newInstancePrefix": "SlidingMenu",
+	"version": "0.0.1",
+	"icon": "",
+	"webcomponents": [
+    {
+      "kind": "main",
+      "tag": "com-sap-sample-sliding-menu",
+      "url": "",
+      "integrity": "",
+      "ignoreIntegrity" : true
+    }
+  ],
+	"properties": {
+    
+	},
+	"methods": {
+
+	},
+	"events": {
+
+	}
+}
