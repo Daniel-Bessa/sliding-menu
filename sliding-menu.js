@@ -3,6 +3,8 @@
   let _id;
   let _password;
 
+  let cenas;
+
   let tmpl = document.createElement("template");
   tmpl.innerHTML = `
   <style>
@@ -84,7 +86,7 @@
     }
   }
 
-  connectedCallback(){}
+  //connectedCallback(){}
 
 
 
