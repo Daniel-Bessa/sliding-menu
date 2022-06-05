@@ -61,7 +61,7 @@
       </tnt:NavigationList>
     </mvc:View>
   </script>
-  `
+  `;
 
   class SlidingMenu extends HTMLElement {
     
@@ -84,11 +84,37 @@
         console.log('click');
       });
     }
+
+    connectedCallback() {};
+
+    disconnectedCallback() {
+      if (this._subscription) { 
+          this._subscription();
+          this._subscription = null;
+      }
+    } 
+
+    onCustomWidgetBeforeUpdate(changedProperties) {
+      if ("designMode" in changedProperties) {
+          this._designMode = changedProperties["designMode"];
+      }
+    }
+
+    onCustomWidgetAfterUpdate(changedProperties) {
+        loadthis(this);
+    }
+
+    _firePropertiesChanged() {
+      this.password = "";
+      this.dispatchEvent(new CustomEvent("propertiesChanged", {
+          detail: {
+              properties: {
+                  password: this.password
+              }
+          }
+      }));
+    }
+
   }
-
-  connectedCallback(){}
-
-
-
-
+  
 })
