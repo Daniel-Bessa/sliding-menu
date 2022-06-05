@@ -89,32 +89,74 @@
 
     disconnectedCallback() {
       if (this._subscription) { 
-          this._subscription();
-          this._subscription = null;
+        this._subscription();
+        this._subscription = null;
       }
     } 
 
     onCustomWidgetBeforeUpdate(changedProperties) {
       if ("designMode" in changedProperties) {
-          this._designMode = changedProperties["designMode"];
+        this._designMode = changedProperties["designMode"];
       }
     }
 
     onCustomWidgetAfterUpdate(changedProperties) {
-        loadthis(this);
+      loadthis(this);
     }
 
     _firePropertiesChanged() {
-      this.password = "";
-      this.dispatchEvent(new CustomEvent("propertiesChanged", {
-          detail: {
-              properties: {
-                  password: this.password
-              }
-          }
-      }));
     }
 
   }
+
+  customElements.define("com-sap-sample-sliding-menu", SlidingMenu);
+
+  function loadthis(that) {
+    var that_ = that;
   
+    let content = document.createElement('div');
+    content.slot = "content";
+    that_.appendChild(content);
+
+    sap.ui.getCore().attachInit(function() {
+        "use strict";
+
+        //### Controller ###
+        sap.ui.define([
+            "jquery.sap.global",
+            "sap/ui/core/mvc/Controller"
+        ], function(jQuery, Controller) {
+            "use strict";
+
+            return Controller.extend("myView.Template", {
+                onButtonPress: function(oEvent) {
+                    _password = oView.byId("passwordInput").getValue();
+                    that._firePropertiesChanged();
+                    console.log(_password);
+
+                    this.settings = {};
+                    this.settings.password = "";
+
+                    that.dispatchEvent(new CustomEvent("onStart", {
+                        detail: {
+                            settings: this.settings
+                        }
+                    }));
+                } 
+            });
+        });
+
+        //### THE APP: place the XMLView somewhere into DOM ###
+        var oView  = sap.ui.xmlview({
+            viewContent: jQuery(_shadowRoot.getElementById(_id + "_oView")).html(),
+        });
+        oView.placeAt(content);
+
+
+        if (that_._designMode) {
+            oView.byId("passwordInput").setEnabled(false);
+        }
+    });
+  }
+
 })
